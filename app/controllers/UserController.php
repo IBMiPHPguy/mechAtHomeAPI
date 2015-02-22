@@ -51,6 +51,31 @@ class UserController extends BaseController {
     }
 	} // login method END
 
+	public function register()
+	{
+		// This method performs the registration functions for a
+		// new user of the application. Validation of the form
+		// occurs in this method as well.
+
+		$validator = Validator::make(Input::all(), User::$regValRules);
+		if ($validator->passes()) {
+		    $user = new User;
+		    $user->fname = Input::get('fname');
+		    $user->lname = Input::get('lname');
+				$user->minit = Input::get('minit');
+		    $user->email = Input::get('email');
+		    $user->password = Hash::make(Input::get('password'));
+				$user->user_type = 'USER';
+		    $user->save();
+
+				// Return Success JSON with User object info and token.
+        return Response::json(array('success' => true, 'message' => 'User created', 'user' => $user));
+		} else {
+		    // validation has failed, display error messages
+			  return Response::json(array('success' => false, 'message' => $validator->messages(), 'user' => null));
+		}
+	}
+
   public function logout()
   {
     // Method to log the user out of the application
