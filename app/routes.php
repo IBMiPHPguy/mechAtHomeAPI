@@ -7,19 +7,6 @@
 |
 */
 
-Route::get('/createUser', function() {
-	$user = new User;
-	$user->email = 'rbine0525@gmail.com';
-	$user->password = Hash::make('notop!01');
-	$user->fname = 'Robert';
-	$user->lname = 'Binetti';
-	$user->minit = 'M';
-	$user->user_type = 'ADMIN';
-	$user->save();
-
-	return User::all();
-});
-
 Route::post('/login', 'UserController@login');
 
 Route::group(array('before' => 'auth.token'), function() {
