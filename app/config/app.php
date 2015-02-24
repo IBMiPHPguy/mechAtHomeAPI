@@ -122,7 +122,7 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Jcf\Geocode\GeocodeServiceProvider',
-
+		'MechAtHome\Common\CommonServiceProvider',
 	),
 
 	/*
@@ -190,7 +190,7 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Geocode' 				=> 'Jcf\Geocode\Facades\Geocode',
-		
+
 	),
 
 );
