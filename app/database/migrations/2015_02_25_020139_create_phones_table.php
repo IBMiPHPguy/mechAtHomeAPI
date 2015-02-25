@@ -24,7 +24,7 @@ class CreatePhonesTable extends Migration {
 			$table->string('short_name',15)->nullable();
 			$table->boolean('text_flag');
 			$table->boolean('primary_nbr');
-			$table->integer('phone_nbr')->unsigned();
+			$table->bigInteger('phone_nbr')->unsigned();
 			$table->timestamps();
 		});
 	}
