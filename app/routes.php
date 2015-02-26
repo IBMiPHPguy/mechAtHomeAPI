@@ -16,5 +16,5 @@ Route::post('/passwordReset', 'RemindersController@postReset');
 Route::group(array('before' => 'auth.token'), function() {
   Route::get('/logout', 'UserController@logout');
   Route::resource('address', 'AddressController');
-  Route::resource('phone', 'PhoneController');
+  Route::resource('phone', 'UserPhoneController');
 });

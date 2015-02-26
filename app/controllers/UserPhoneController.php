@@ -1,6 +1,6 @@
 <?php
 
-class PhoneController extends \BaseController {
+class UserPhoneController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -11,7 +11,7 @@ class PhoneController extends \BaseController {
 	{
 		//
 		if (Common::getUserInfo()->user_type == 'ADMIN') {
-			return Phone::all();
+			return UserPhone::all();
 		} else {
 			return Response::json(array('success' => false, 'message' => 'Method not allowed. Must be ADMIN.'));
 		}
@@ -39,9 +39,9 @@ class PhoneController extends \BaseController {
 	{
 		//
 		if (Common::getUserInfo()->user_type == 'ADMIN' || Common::getUserInfo()->id == Input::get('user_id')) {
-			$validator = Validator::make(Input::all(), Phone::$regValRules);
+			$validator = Validator::make(Input::all(), UserPhone::$regValRules);
 			if ($validator->passes()) {
-			    $phone = new Phone;
+			    $phone = new UserPhone;
 					$phone->user_id = Input::get('user_id');
 					$phone->phone_type = Input::get('phone_type');
 					$phone->short_name = trim(Input::get('short_name'));
@@ -70,7 +70,7 @@ class PhoneController extends \BaseController {
 	public function show($id)
 	{
 		//
-		$phone = Phone::where('id', '=', $id)->first();
+		$phone = UserPhone::where('id', '=', $id)->first();
 		if (Common::getUserInfo()->user_type == 'ADMIN' || Common::getUserInfo()->id == $phone->user_id) {
 			return Response::json(array('success' => true, 'message' => 'User phone number retrieved', 'phone' => $phone));
 		} else {
@@ -99,9 +99,9 @@ class PhoneController extends \BaseController {
 	public function update($id)
 	{
 		//
-		$phone = Phone::where('id', '=', $id)->first();
+		$phone = UserPhone::where('id', '=', $id)->first();
 		if (Common::getUserInfo()->user_type == 'ADMIN' || Common::getUserInfo()->id == $phone->user_id) {
-			$validator = Validator::make(Input::all(), Phone::$regValRules);
+			$validator = Validator::make(Input::all(), UserPhone::$regValRules);
 			if ($validator->passes()) {
 					$phone->user_id = Input::get('user_id');
 					$phone->phone_type = Input::get('phone_type');
@@ -130,7 +130,7 @@ class PhoneController extends \BaseController {
 	public function destroy($id)
 	{
 		//
-		$phone = Phone::where('id', '=', $id)->first();
+		$phone = UserPhone::where('id', '=', $id)->first();
 		if (Common::getUserInfo()->user_type == 'ADMIN' || Common::getUserInfo()->id == $phone->user_id) {
 			$phone->delete();
 			return Response::json(array('success' => true, 'message' => 'User phone number deleted'));
