@@ -1,6 +1,6 @@
 <?php
 
-class AddressController extends \BaseController {
+class UserAddressController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -15,7 +15,7 @@ class AddressController extends \BaseController {
 	{
 		//
 		if (Common::getUserInfo()->user_type == 'ADMIN') {
-			return Address::all();
+			return UserAddress::all();
 		} else {
 			return Response::json(array('success' => false, 'message' => 'Method not allowed. Must be ADMIN.'));
 		}
@@ -43,9 +43,9 @@ class AddressController extends \BaseController {
 	public function store()
 	{
 		if (Common::getUserInfo()->user_type == 'ADMIN' || Common::getUserInfo()->id == Input::get('user_id')) {
-			$validator = Validator::make(Input::all(), Address::$regValRules);
+			$validator = Validator::make(Input::all(), UserAddress::$regValRules);
 			if ($validator->passes()) {
-			    $address = new Address;
+			    $address = new UserAddress;
 					$address->user_id = Input::get('user_id');
 					$address->address_type = Input::get('address_type');
 					$address->short_name = trim(Input::get('short_name'));
@@ -87,7 +87,7 @@ class AddressController extends \BaseController {
 	public function show($id)
 	{
 		//
-		$address = Address::where('id', '=', $id)->first();
+		$address = UserAddress::where('id', '=', $id)->first();
 		if (Common::getUserInfo()->user_type == 'ADMIN' || Common::getUserInfo()->id == $address->user_id) {
 			return Response::json(array('success' => true, 'message' => 'User address retrieved', 'address' => $address));
 		} else {
@@ -118,9 +118,9 @@ class AddressController extends \BaseController {
 	public function update($id)
 	{
 		//
-		$address = Address::where('id', '=', $id)->first();
+		$address = UserAddress::where('id', '=', $id)->first();
 		if (Common::getUserInfo()->user_type == 'ADMIN' || Common::getUserInfo()->id == $address->user_id) {
-			$validator = Validator::make(Input::all(), Address::$regValRules);
+			$validator = Validator::make(Input::all(), UserAddress::$regValRules);
 			if ($validator->passes()) {
 			    $address->user_id = Input::get('user_id');
 					$address->address_type = Input::get('address_type');
@@ -162,7 +162,7 @@ class AddressController extends \BaseController {
 	public function destroy($id)
 	{
 		//
-		$address = Address::where('id', '=', $id)->first();
+		$address = UserAddress::where('id', '=', $id)->first();
 		if (Common::getUserInfo()->user_type == 'ADMIN' || Common::getUserInfo()->id == $address->user_id) {
 			$address->delete();
 			return Response::json(array('success' => true, 'message' => 'User address deleted'));

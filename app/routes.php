@@ -15,6 +15,6 @@ Route::post('/passwordReset', 'RemindersController@postReset');
 // Protected Routes that require an API token
 Route::group(array('before' => 'auth.token'), function() {
   Route::get('/logout', 'UserController@logout');
-  Route::resource('address', 'AddressController');
+  Route::resource('address', 'UserAddressController');
   Route::resource('phone', 'UserPhoneController');
 });
