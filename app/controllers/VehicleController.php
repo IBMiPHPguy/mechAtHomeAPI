@@ -29,4 +29,15 @@ class VehicleController extends \BaseController {
 		//
 		return Response::json(array('success' => true, 'message' => Common::edmundsVehicleStyles($year, $make, $model)));
 	}
+
+  /**
+	 * Get a JSON listing of vehicle information based on VIN
+	 *
+   * @param   vin string(17)
+	 * @return  JSON Response
+	 */
+  public function getVehicleInfoByVIN($vin) {
+    //
+		return Response::json(array('success' => true, 'message' => Common::edmundsVehicleByVIN($vin)));
+  }
 }

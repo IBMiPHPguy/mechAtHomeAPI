@@ -76,4 +76,29 @@ class Common {
         $response = $client->get('https://api.edmunds.com/api/vehicle/v2/'.$make.'/'.$model.'/'.$year.'/styles?fmt=json&api_key='.$key);
         return $response->json();
     }
+
+    /*
+    |
+    | Common Facade::edmundsVehicleByVIN method
+    |
+    | Use:    Get from the Edmunds API the vehicle information
+    |         based on the vehicle's VIN number provided.
+    |
+    | Params: vin (string,17)
+    | Retrun: JSON object
+    |
+    | Author:   Robert Binetti
+    | Date:     02/28/2015
+    | Version:  1.0
+    |
+    | ::CHANGE LOG::
+    | 1.0   RMB   Initial method creation.
+    |
+    */
+    public function edmundsVehicleByVIN($vin) {
+        $key = \Config::get('edmundsAPI.key');
+        $client = new \GuzzleHttp\Client();
+        $response = $client->get('https://api.edmunds.com/api/vehicle/v2/vins/'.$vin.'?fmt=json&api_key='.$key);
+        return $response->json();
+    }
 }

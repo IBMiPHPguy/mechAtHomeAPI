@@ -13,6 +13,7 @@ Route::post('/passwordRemind', 'RemindersController@postRemind');
 Route::post('/passwordReset', 'RemindersController@postReset');
 Route::get('/getVehicleMakeModels/{year}', 'VehicleController@getMakeModels');
 Route::get('/getVehicleStyles/{year}/{make}/{model}', 'VehicleController@getStyles');
+Route::get('/getVehicleInfoByVIN/{vin}', 'VehicleController@getVehicleInfoByVIN');
 
 // Protected Routes that require an API token
 Route::group(array('before' => 'auth.token'), function() {
