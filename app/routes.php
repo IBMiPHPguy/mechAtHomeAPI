@@ -18,6 +18,6 @@ Route::get('/getVehicleInfoByVIN/{vin}', 'VehicleController@getVehicleInfoByVIN'
 // Protected Routes that require an API token
 Route::group(array('before' => 'auth.token'), function() {
   Route::get('/logout', 'UserController@logout');
-  Route::resource('address', 'UserAddressController');
-  Route::resource('phone', 'UserPhoneController');
+  Route::resource('/userAddress', 'UserAddressController');
+  Route::resource('/userPhone', 'UserPhoneController');
 });
