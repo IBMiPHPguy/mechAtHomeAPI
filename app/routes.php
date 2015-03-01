@@ -20,4 +20,5 @@ Route::group(array('before' => 'auth.token'), function() {
   Route::get('/logout', 'UserController@logout');
   Route::resource('/userAddress', 'UserAddressController');
   Route::resource('/userPhone', 'UserPhoneController');
+  Route::resource('/userVehicle', 'UserVehicleController');
 });
