@@ -18,4 +18,25 @@ return array(
 
   'key' => 'm6dav8sncbvm8dhu323dgzb5',
 
+  /*
+	|--------------------------------------------------------------------------
+	| Edmunds Developers Network Information time to live in munites
+	|--------------------------------------------------------------------------
+	|
+	| This is the time in minutes that we will store the information
+  | received from the Edmunds API, as per the API requirements
+  |
+	*/
+  'minutes' => 1440,
+
+  /*
+	|--------------------------------------------------------------------------
+	| Edmunds Developers Network API Base URL
+	|--------------------------------------------------------------------------
+	|
+	| This is the base URL we will use to make all our Edmunds API calls.
+  |
+	*/
+  'baseURL' => 'http://api.edmunds.com/api/vehicle/v2',
+
 );

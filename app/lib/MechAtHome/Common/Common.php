@@ -30,7 +30,8 @@ class Common {
     | Common Facade::edmundsVehicleMakes method
     |
     | Use:    Get from the Edmunds API the makes of vehicles for a
-    |         given year.
+    |         given year. Stores the response into Memcache for
+    |         a period defined by the edmundsAPI config file.
     |
     | Params: year (int)
     | Retrun: JSON object
@@ -46,7 +47,9 @@ class Common {
     public function edmundsVehicleMakeModels($year) {
         $key = \Config::get('edmundsAPI.key');
         $client = new \GuzzleHttp\Client();
-        $response = $client->get('http://api.edmunds.com/api/vehicle/v2/makes?fmt=json&year='.$year.'&api_key='.$key);
+        $url = \Config::get('edmundsAPI.baseURL').'/makes?fmt=json&year='.$year.'&api_key='.$key;
+        $response = $client->get($url);
+        \Cache::add($year.'MakeModels', $response->json(), \Config::get('edmundsAPI.minutes'));
         return $response->json();
     }
 
@@ -71,9 +74,12 @@ class Common {
     |
     */
     public function edmundsVehicleStyles($year, $make, $model) {
+        $memcacheKey = $year.'*'.str_replace(" ", "_", $make).'*'.str_replace(" ", "_", $model);
         $key = \Config::get('edmundsAPI.key');
         $client = new \GuzzleHttp\Client();
-        $response = $client->get('https://api.edmunds.com/api/vehicle/v2/'.$make.'/'.$model.'/'.$year.'/styles?fmt=json&api_key='.$key);
+        $url = \Config::get('edmundsAPI.baseURL').'/'.$make.'/'.$model.'/'.$year.'/styles?fmt=json&api_key='.$key;
+        $response = $client->get($url);
+        \Cache::add($memcacheKey, $response->json(), \Config::get('edmundsAPI.minutes'));
         return $response->json();
     }
 
@@ -98,7 +104,8 @@ class Common {
     public function edmundsVehicleByVIN($vin) {
         $key = \Config::get('edmundsAPI.key');
         $client = new \GuzzleHttp\Client();
-        $response = $client->get('https://api.edmunds.com/api/vehicle/v2/vins/'.$vin.'?fmt=json&api_key='.$key);
+        $url = \Config::get('edmundsAPI.baseURL').'/vins/'.$vin.'?fmt=json&api_key='.$key;
+        $response = $client->get($url);
         return $response->json();
     }
 }
