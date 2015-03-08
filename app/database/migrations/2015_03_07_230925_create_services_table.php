@@ -16,7 +16,11 @@ class CreateServicesTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('service_name',15);
-			$table->string('service_type',15);
+			$table->integer('servicetype_id')->unsigned();
+			$table->foreign('servicetype_id')->references('id')
+				->on('servicetypes')
+				->onDelete('cascade')
+				->onUpdate('cascade');
 			$table->string('service_desc');
 			$table->decimal('amount', 5, 2);
 			$table->timestamps();

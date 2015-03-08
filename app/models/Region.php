@@ -5,24 +5,22 @@ use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
 
-class Service extends Eloquent implements UserInterface, RemindableInterface {
+class Region extends Eloquent implements UserInterface, RemindableInterface {
 
 	use UserTrait, RemindableTrait;
 
 	public static $regValRules = array(
-    'service_name'=>'required',
-    'servicetype_id'=>'required|exists:servicetypes,id',
-		'service_desc'=>'required',
-		'amount'=>'required|numeric',
+    'region_name'=>'required',
+    'region_code'=>'required',
   );
 
-	protected $fillable = ['service_name','servicetype_id','service_desc','amount'];
+	protected $fillable = ['region_name','region_code'];
 	/**
 	 * The database table used by the model.
 	 *
 	 * @var string
 	 */
-	protected $table = 'services';
+	protected $table = 'regions';
 
 	/**
 	 * The attributes excluded from the model's JSON form.

@@ -25,7 +25,7 @@ class ServiceController extends \BaseController {
 			if ($validator->passes()) {
 			    $service = new Service;
 					$service->service_name = trim(Input::get('service_name'));
-					$service->service_type = trim(Input::get('service_type'));
+					$service->servicetype_id = trim(Input::get('servicetype_id'));
 					$service->service_desc = trim(Input::get('service_desc'));
 					$service->amount = Input::get('amount');
 					$service->save();
@@ -68,7 +68,7 @@ class ServiceController extends \BaseController {
 			if ($validator->passes()) {
 					$service = Service::where('id', '=', $id)->first();
 					$service->service_name = trim(Input::get('service_name'));
-					$service->service_type = trim(Input::get('service_type'));
+					$service->servicetype_id = trim(Input::get('servicetype_id'));
 					$service->service_desc = trim(Input::get('service_desc'));
 					$service->amount = Input::get('amount');
 					$service->save();

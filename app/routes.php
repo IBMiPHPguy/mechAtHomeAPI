@@ -26,4 +26,7 @@ Route::group(array('before' => 'auth.token'), function() {
   Route::post('/createService', 'ServiceController@store');
   Route::put('/editService/{id}', 'ServiceController@update');
   Route::delete('/deleteService/{id}', 'ServiceController@destroy');
+  Route::resource('/serviceType', 'ServicetypeController');
+  Route::resource('/region', 'RegionController');
+  Route::resource('/zipRegion', 'ZipregionController');
 });
