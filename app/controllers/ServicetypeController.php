@@ -9,11 +9,7 @@ class ServicetypeController extends \BaseController {
 	 */
 	public function index()
 	{
-		if (Common::getUserInfo()->user_type == 'ADMIN') {
-			return Servicetype::all();
-		} else {
-			return Response::json(array('success' => false, 'message' => 'Method not allowed. Must be ADMIN.'));
-		}
+		return Servicetype::all();
 	}
 
 
@@ -24,21 +20,25 @@ class ServicetypeController extends \BaseController {
 	 */
 	public function store()
 	{
-		if (Common::getUserInfo()->user_type == 'ADMIN') {
-			$validator = Validator::make(Input::all(), Servicetype::$regValRules);
-			if ($validator->passes()) {
-			    $servicetype = new Servicetype;
-					$servicetype->servtype_name = trim(Input::get('servtype_name'));
-					$servicetype->save();
+		$validator = Validator::make(Input::all(), Servicetype::$regValRules);
+		if ($validator->passes()) {
+		    $servicetype = new Servicetype;
+				$servicetype->servtype_name = trim(Input::get('servtype_name'));
+				$servicetype->save();
 
-					// Return Success JSON with User object info and token.
-	        return Response::json(array('success' => true, 'message' => 'Service type created', 'Service Type' => $servicetype));
-			} else {
-			    // validation has failed, display error messages
-				  return Response::json(array('success' => false, 'message' => $validator->messages(), 'Service Type' => null));
-			}
+				// Return Success JSON with User object info and token.
+        return Response::json(array(
+					'success' => true,
+					'message' => 'Service type created',
+					'Service Type' => $servicetype,
+				));
 		} else {
-			return Response::json(array('success' => false, 'message' => 'Method not allowed. Must be ADMIN.'));
+		    // validation has failed, display error messages
+			  return Response::json(array(
+					'success' => false,
+					'message' => $validator->messages(),
+					'Service Type' => null,
+				));
 		}
 	}
 
@@ -51,12 +51,12 @@ class ServicetypeController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		if (Common::getUserInfo()->user_type == 'ADMIN') {
-			$servicetype = Servicetype::where('id', '=', $id)->first();
-			return Response::json(array('success' => true, 'message' => 'Service type retrieved', 'Service Type' => $servicetype));
-		} else {
-			return Response::json(array('success' => false, 'message' => 'Method not allowed. Must be ADMIN.'));
-		}
+		$servicetype = Servicetype::where('id', '=', $id)->first();
+		return Response::json(array(
+			'success' => true,
+			'message' => 'Service type retrieved',
+			'Service Type' => $servicetype,
+		));
 	}
 
 
@@ -68,7 +68,6 @@ class ServicetypeController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		if (Common::getUserInfo()->user_type == 'ADMIN') {
 			$validator = Validator::make(Input::all(), Servicetype::$regValRules);
 			if ($validator->passes()) {
 					$servicetype = Servicetype::where('id', '=', $id)->first();
@@ -76,14 +75,19 @@ class ServicetypeController extends \BaseController {
 					$servicetype->save();
 
 					// Return Success JSON with User object info and token.
-	        return Response::json(array('success' => true, 'message' => 'Service type updated', 'Service Type' => $servicetype));
+	        return Response::json(array(
+						'success' => true,
+						'message' => 'Service type updated',
+						'Service Type' => $servicetype,
+					));
 			} else {
 			    // validation has failed, display error messages
-				  return Response::json(array('success' => false, 'message' => $validator->messages(), 'Service Type' => null));
+				  return Response::json(array(
+						'success' => false,
+						'message' => $validator->messages(),
+						'Service Type' => null,
+					));
 			}
-		} else {
-			return Response::json(array('success' => false, 'message' => 'Method not allowed. Must be ADMIN.'));
-		}
 	}
 
 
@@ -95,13 +99,12 @@ class ServicetypeController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		if (Common::getUserInfo()->user_type == 'ADMIN') {
 			$servicetype = Servicetype::where('id', '=', $id)->first();
 			$servicetype->delete();
-			return Response::json(array('success' => true, 'message' => 'Service type deleted'));
-		} else {
-			return Response::json(array('success' => false, 'message' => 'Method not allowed. Must be ADMIN.'));
-		}
+			return Response::json(array(
+				'success' => true,
+				'message' => 'Service type deleted',
+			));
 	}
 
 

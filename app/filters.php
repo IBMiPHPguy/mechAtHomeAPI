@@ -121,3 +121,35 @@ Route::filter('auth.token', function($route, $request)
     return $response;
     }
 });
+
+/*
+|--------------------------------------------------------------------------
+| Check if Authenticated user is Admin
+|--------------------------------------------------------------------------
+|
+| The check.admin filter is responsible for protecting application routes
+| that require an the user to be an admin. We match the authenticated
+| token to the user and verify that the user type is admin.
+|
+*/
+
+Route::filter('check.admin', function($route, $request)
+{
+		// Get the token from the request header X-Auth-Token
+    $token = $request->header('X-Auth-Token');
+
+		// Find a user record with the token
+    $user =  User::where('api_token', '=', $token)->first();
+
+		// If the user type is not ADMIN send a JSON 401 error.
+		if($user->user_type <> 'ADMIN') {
+        $response = Response::json([
+            'success' => false,
+            'message' => 'Not ADMIN',
+            'code' => 401],
+            401
+        );
+        $response->header('Content-Type', 'application/json');
+    		return $response;
+    }
+});

@@ -20,24 +20,28 @@ class ServiceController extends \BaseController {
 	 */
 	public function store()
 	{
-		if (Common::getUserInfo()->user_type == 'ADMIN') {
-			$validator = Validator::make(Input::all(), Service::$regValRules);
-			if ($validator->passes()) {
-			    $service = new Service;
-					$service->service_name = trim(Input::get('service_name'));
-					$service->servicetype_id = trim(Input::get('servicetype_id'));
-					$service->service_desc = trim(Input::get('service_desc'));
-					$service->amount = Input::get('amount');
-					$service->save();
+		$validator = Validator::make(Input::all(), Service::$regValRules);
+		if ($validator->passes()) {
+		    $service = new Service;
+				$service->service_name = trim(Input::get('service_name'));
+				$service->servicetype_id = trim(Input::get('servicetype_id'));
+				$service->service_desc = trim(Input::get('service_desc'));
+				$service->amount = Input::get('amount');
+				$service->save();
 
-					// Return Success JSON with User object info and token.
-	        return Response::json(array('success' => true, 'message' => 'Service created', 'service' => $service));
-			} else {
-			    // validation has failed, display error messages
-				  return Response::json(array('success' => false, 'message' => $validator->messages(), 'service' => null));
-			}
+				// Return Success JSON with User object info and token.
+        return Response::json(array(
+					'success' => true,
+					'message' => 'Service created',
+					'service' => $service,
+				));
 		} else {
-			return Response::json(array('success' => false, 'message' => 'Method not allowed. Must be ADMIN.'));
+		    // validation has failed, display error messages
+			  return Response::json(array(
+					'success' => false,
+					'message' => $validator->messages(),
+					'service' => null,
+				));
 		}
 	}
 
@@ -51,7 +55,11 @@ class ServiceController extends \BaseController {
 	public function show($id)
 	{
 		$service = Service::where('id', '=', $id)->first();
-		return Response::json(array('success' => true, 'message' => 'Service retrieved', 'service' => $service));
+		return Response::json(array(
+			'success' => true,
+			'message' => 'Service retrieved',
+			'service' => $service,
+		));
 	}
 
 
@@ -63,24 +71,28 @@ class ServiceController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		if (Common::getUserInfo()->user_type == 'ADMIN') {
-			$validator = Validator::make(Input::all(), Service::$regValRules);
-			if ($validator->passes()) {
-					$service = Service::where('id', '=', $id)->first();
-					$service->service_name = trim(Input::get('service_name'));
-					$service->servicetype_id = trim(Input::get('servicetype_id'));
-					$service->service_desc = trim(Input::get('service_desc'));
-					$service->amount = Input::get('amount');
-					$service->save();
+		$validator = Validator::make(Input::all(), Service::$regValRules);
+		if ($validator->passes()) {
+				$service = Service::where('id', '=', $id)->first();
+				$service->service_name = trim(Input::get('service_name'));
+				$service->servicetype_id = trim(Input::get('servicetype_id'));
+				$service->service_desc = trim(Input::get('service_desc'));
+				$service->amount = Input::get('amount');
+				$service->save();
 
-					// Return Success JSON with User object info and token.
-	        return Response::json(array('success' => true, 'message' => 'Service updated', 'service' => $service));
-			} else {
-			    // validation has failed, display error messages
-				  return Response::json(array('success' => false, 'message' => $validator->messages(), 'service' => null));
-			}
+				// Return Success JSON with User object info and token.
+        return Response::json(array(
+					'success' => true,
+					'message' => 'Service updated',
+					'service' => $service,
+				));
 		} else {
-			return Response::json(array('success' => false, 'message' => 'Method not allowed. Must be ADMIN.'));
+		    // validation has failed, display error messages
+			  return Response::json(array(
+					'success' => false,
+					'message' => $validator->messages(),
+					'service' => null,
+				));
 		}
 	}
 
@@ -93,13 +105,12 @@ class ServiceController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		if (Common::getUserInfo()->user_type == 'ADMIN') {
-			$service = Service::where('id', '=', $id)->first();
-			$service->delete();
-			return Response::json(array('success' => true, 'message' => 'Service deleted'));
-		} else {
-			return Response::json(array('success' => false, 'message' => 'Method not allowed. Must be ADMIN.'));
-		}
+		$service = Service::where('id', '=', $id)->first();
+		$service->delete();
+		return Response::json(array(
+			'success' => true,
+			'message' => 'Service deleted',
+		));
 	}
 
 

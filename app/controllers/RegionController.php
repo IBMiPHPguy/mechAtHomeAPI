@@ -9,14 +9,7 @@ class RegionController extends \BaseController {
 	 */
 	public function index()
 	{
-		if (Common::getUserInfo()->user_type == 'ADMIN') {
-			return Region::all();
-		} else {
-			return Response::json(array(
-				'success' => false,
-				'message' => 'Method not allowed. Must be ADMIN.',
-			));
-		}
+		return Region::all();
 	}
 
 
@@ -27,33 +20,26 @@ class RegionController extends \BaseController {
 	 */
 	public function store()
 	{
-		if (Common::getUserInfo()->user_type == 'ADMIN') {
-			$validator = Validator::make(Input::all(), Region::$regValRules);
-			if ($validator->passes()) {
-			    $region = new Region;
-					$region->region_name = trim(Input::get('region_name'));
-					$region->region_code = trim(Input::get('region_code'));
-					$region->save();
+		$validator = Validator::make(Input::all(), Region::$regValRules);
+		if ($validator->passes()) {
+		    $region = new Region;
+				$region->region_name = trim(Input::get('region_name'));
+				$region->region_code = trim(Input::get('region_code'));
+				$region->save();
 
-					// Return Success JSON with User object info and token.
-	        return Response::json(array(
-						'success' => true,
-						'message' => 'Region created',
-						'Region' => $region,
-					));
-			} else {
-			    // validation has failed, display error messages
-				  return Response::json(array(
-						'success' => false,
-						'message' => $validator->messages(),
-						'Region' => null,
-					));
-			}
+				// Return Success JSON with User object info and token.
+        return Response::json(array(
+					'success' => true,
+					'message' => 'Region created',
+					'Region' => $region,
+				));
 		} else {
-			return Response::json(array(
-				'success' => false,
-				'message' => 'Method not allowed. Must be ADMIN.',
-			));
+		    // validation has failed, display error messages
+			  return Response::json(array(
+					'success' => false,
+					'message' => $validator->messages(),
+					'Region' => null,
+				));
 		}
 	}
 
@@ -66,19 +52,12 @@ class RegionController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		if (Common::getUserInfo()->user_type == 'ADMIN') {
-			$region = Region::where('id', '=', $id)->first();
-			return Response::json(array(
-				'success' => true,
-				'message' => 'Region retrieved',
-				'Region' => $region,
-			));
-		} else {
-			return Response::json(array(
-				'success' => false,
-				'message' => 'Method not allowed. Must be ADMIN.',
-			));
-		}
+		$region = Region::where('id', '=', $id)->first();
+		return Response::json(array(
+			'success' => true,
+			'message' => 'Region retrieved',
+			'Region' => $region,
+		));
 	}
 
 
@@ -90,33 +69,26 @@ class RegionController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		if (Common::getUserInfo()->user_type == 'ADMIN') {
-			$validator = Validator::make(Input::all(), Region::$regValRules);
-			if ($validator->passes()) {
-					$region = Region::where('id', '=', $id)->first();
-					$region->region_name = trim(Input::get('region_name'));
-					$region->region_code = trim(Input::get('region_code'));
-					$region->save();
+		$validator = Validator::make(Input::all(), Region::$regValRules);
+		if ($validator->passes()) {
+				$region = Region::where('id', '=', $id)->first();
+				$region->region_name = trim(Input::get('region_name'));
+				$region->region_code = trim(Input::get('region_code'));
+				$region->save();
 
-					// Return Success JSON with User object info and token.
-	        return Response::json(array(
-						'success' => true,
-						'message' => 'Region updated',
-						'Region' => $region,
-					));
-			} else {
-			    // validation has failed, display error messages
-				  return Response::json(array(
-						'success' => false,
-						'message' => $validator->messages(),
-						'Region' => null,
-					));
-			}
+				// Return Success JSON with User object info and token.
+        return Response::json(array(
+					'success' => true,
+					'message' => 'Region updated',
+					'Region' => $region,
+				));
 		} else {
-			return Response::json(array(
-				'success' => false,
-				'message' => 'Method not allowed. Must be ADMIN.',
-			));
+		    // validation has failed, display error messages
+			  return Response::json(array(
+					'success' => false,
+					'message' => $validator->messages(),
+					'Region' => null,
+				));
 		}
 	}
 
@@ -129,19 +101,12 @@ class RegionController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		if (Common::getUserInfo()->user_type == 'ADMIN') {
-			$region = Region::where('id', '=', $id)->first();
-			$region->delete();
-			return Response::json(array(
-				'success' => true,
-				'message' => 'Region deleted',
-			));
-		} else {
-			return Response::json(array(
-				'success' => false,
-				'message' => 'Method not allowed. Must be ADMIN.',
-			));
-		}
+		$region = Region::where('id', '=', $id)->first();
+		$region->delete();
+		return Response::json(array(
+			'success' => true,
+			'message' => 'Region deleted',
+		));
 	}
 
 

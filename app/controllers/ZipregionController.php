@@ -9,14 +9,7 @@ class ZipregionController extends \BaseController {
 	 */
 	public function index()
 	{
-		if (Common::getUserInfo()->user_type == 'ADMIN') {
-			return Zipregion::all();
-		} else {
-			return Response::json(array(
-				'success' => false,
-				'message' => 'Method not allowed. Must be ADMIN.',
-			));
-		}
+		return Zipregion::all();
 	}
 
 
@@ -27,33 +20,26 @@ class ZipregionController extends \BaseController {
 	 */
 	public function store()
 	{
-		if (Common::getUserInfo()->user_type == 'ADMIN') {
-			$validator = Validator::make(Input::all(), Zipregion::$regValRules);
-			if ($validator->passes()) {
-			    $zipregion = new Zipregion;
-					$zipregion->region_id = trim(Input::get('region_id'));
-					$zipregion->zip = trim(Input::get('zip'));
-					$zipregion->save();
+		$validator = Validator::make(Input::all(), Zipregion::$regValRules);
+		if ($validator->passes()) {
+		    $zipregion = new Zipregion;
+				$zipregion->region_id = trim(Input::get('region_id'));
+				$zipregion->zip = trim(Input::get('zip'));
+				$zipregion->save();
 
-					// Return Success JSON with User object info and token.
-	        return Response::json(array(
-						'success' => true,
-						'message' => 'Zip region created',
-						'Zip region' => $zipregion,
-					));
-			} else {
-			    // validation has failed, display error messages
-				  return Response::json(array(
-						'success' => false,
-						'message' => $validator->messages(),
-						'Zip region' => null,
-					));
-			}
+				// Return Success JSON with User object info and token.
+        return Response::json(array(
+					'success' => true,
+					'message' => 'Zip region created',
+					'Zip region' => $zipregion,
+				));
 		} else {
-			return Response::json(array(
-				'success' => false,
-				'message' => 'Method not allowed. Must be ADMIN.',
-			));
+		    // validation has failed, display error messages
+			  return Response::json(array(
+					'success' => false,
+					'message' => $validator->messages(),
+					'Zip region' => null,
+				));
 		}
 	}
 
@@ -66,19 +52,12 @@ class ZipregionController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		if (Common::getUserInfo()->user_type == 'ADMIN') {
-			$zipregion = Zipregion::where('id', '=', $id)->first();
-			return Response::json(array(
-				'success' => true,
-				'message' => 'Zip region retrieved',
-				'Zip region' => $zipregion,
-			));
-		} else {
-			return Response::json(array(
-				'success' => false,
-				'message' => 'Method not allowed. Must be ADMIN.',
-			));
-		}
+		$zipregion = Zipregion::where('id', '=', $id)->first();
+		return Response::json(array(
+			'success' => true,
+			'message' => 'Zip region retrieved',
+			'Zip region' => $zipregion,
+		));
 	}
 
 
@@ -90,33 +69,26 @@ class ZipregionController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		if (Common::getUserInfo()->user_type == 'ADMIN') {
-			$validator = Validator::make(Input::all(), Zipregion::$regValRules);
-			if ($validator->passes()) {
-					$zipregion = Zipregion::where('id', '=', $id)->first();
-					$zipregion->region_id = trim(Input::get('region_id'));
-					$zipregion->zip = trim(Input::get('zip'));
-					$zipregion->save();
+		$validator = Validator::make(Input::all(), Zipregion::$regValRules);
+		if ($validator->passes()) {
+				$zipregion = Zipregion::where('id', '=', $id)->first();
+				$zipregion->region_id = trim(Input::get('region_id'));
+				$zipregion->zip = trim(Input::get('zip'));
+				$zipregion->save();
 
-					// Return Success JSON with User object info and token.
-	        return Response::json(array(
-						'success' => true,
-						'message' => 'Zip region updated',
-						'Zip region' => $zipregion,
-					));
-			} else {
-			    // validation has failed, display error messages
-				  return Response::json(array(
-						'success' => false,
-						'message' => $validator->messages(),
-						'Zip region' => null,
-					));
-			}
+				// Return Success JSON with User object info and token.
+        return Response::json(array(
+					'success' => true,
+					'message' => 'Zip region updated',
+					'Zip region' => $zipregion,
+				));
 		} else {
-			return Response::json(array(
-				'success' => false,
-				'message' => 'Method not allowed. Must be ADMIN.',
-			));
+		    // validation has failed, display error messages
+			  return Response::json(array(
+					'success' => false,
+					'message' => $validator->messages(),
+					'Zip region' => null,
+				));
 		}
 	}
 
@@ -129,19 +101,12 @@ class ZipregionController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		if (Common::getUserInfo()->user_type == 'ADMIN') {
-			$zipregion = Zipregion::where('id', '=', $id)->first();
-			$zipregion->delete();
-			return Response::json(array(
-				'success' => true,
-				'message' => 'Zip region deleted',
-			));
-		} else {
-			return Response::json(array(
-				'success' => false,
-				'message' => 'Method not allowed. Must be ADMIN.',
-			));
-		}
+		$zipregion = Zipregion::where('id', '=', $id)->first();
+		$zipregion->delete();
+		return Response::json(array(
+			'success' => true,
+			'message' => 'Zip region deleted',
+		));
 	}
 
 
