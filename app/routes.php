@@ -30,5 +30,6 @@ Route::group(array('before' => 'auth.token'), function() {
     Route::resource('/serviceType', 'ServicetypeController');
     Route::resource('/region', 'RegionController');
     Route::resource('/zipRegion', 'ZipregionController');
+    Route::resource('/contRegionSrvc', 'ContserviceController');
   });
 });
