@@ -20,6 +20,9 @@ App::before(function($request)
 App::after(function($request, $response)
 {
 	//
+	$response->headers->set('Access-Control-Allow-Origin', '*');
+	$response->headers->set('Access-Control-Allow-Headers', 'Content-Type,X-Auth-Token');
+  return $response;
 });
 
 /*
